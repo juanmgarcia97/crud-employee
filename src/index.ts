@@ -1,12 +1,11 @@
-import express from "express";
+import 'reflect-metadata';
+import 'dotenv/config';
+import { AppDataSource } from './infrastructure/persistence/db.config';
+import Server from './server';
 
-const app = express();
-const port = 3_000;
+const start = async () => {
+  await AppDataSource.initialize();
+  new Server().start();
+};
 
-app.get("/", (request, response) => {
-  response.send("Hello World");
-});
-
-app.listen(port, () => {
-  console.log(`Server listening on port: ${port}`);
-});
+start();
